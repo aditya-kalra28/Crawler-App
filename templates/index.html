@@ -12,12 +12,16 @@
 
 </head>
 <body>
-    <h1>Web Crawler App</h1>
+    <div class="header">
+        <h1>Web Crawler App</h1>
+    </div>
+    
     <br>
     <form action="" method="POST">
         {% csrf_token %}
-        <input type="text" name="tag" id="tag" placeholder="Enter A Tag"><br><br>
-        <input type="submit" value="Submit">
+        <input type="text" name="tag" id="tag" class="p-1" placeholder="Enter A Tag">
+        <a href="History" class="btn btn-outline-dark history p-1" >History</a><br><br>
+        <input type="submit" value="Submit" class="btn btn-dark">
     </form>
 
     <br>
@@ -46,6 +50,9 @@
             </tbody>
         {% endfor %}
       </table>
+
+      
+      
     
       <!-- <script>
           $(document).ready(function(){

@@ -4,7 +4,7 @@ import requests
 from nltk.corpus import stopwords
 from collections import Counter
 from urllib.parse import urljoin
-from .models import page
+from .models import page, history
 
 # Create your views here.
 def GetContent(URL,url):
@@ -82,6 +82,12 @@ def index(request):
         parsed = BeautifulSoup(webpage.content, "html5lib")
         pages = []
         articles = parsed.find_all("article")
+        
+
+        if history.objects.filter(tag = ta).exists()==False:
+            his = history.objects.create(tag=ta)
+            his.save()
+
         for i in articles:
             url = i.findAll("a")[-1].get('href')
             print(url)
@@ -108,13 +114,17 @@ def index(request):
                     p.reading_time = reading_time
 
                     page.objects.create(num=p.num, link=p.link, creator=p.creator, name=p.name, published_date=p.published_date, reading_time=p.reading_time)
-
+                    p.save()
                     pages.append(p)
-                    if len(pages)==2:
-                        return render(request,'index.html',{'pages':pages,"link":"https://medium.com"+url,"creator":creator,"name":name,"published_date":published_date,"reading_time":reading_time})
+                    # if len(pages)==2:
+        return render(request,'index.html',{'pages':pages,"link":"https://medium.com"+url,"creator":creator,"name":name,"published_date":published_date,"reading_time":reading_time})
     else:
         return render(request,'index.html')
 
 def getpage(request):
     data = page.objects.get()
     return render(request,"index.html",{{'data':data}})
+
+def History(request):
+    data = history.objects.all()
+    return render(request,"history.html",{"data" : data})
