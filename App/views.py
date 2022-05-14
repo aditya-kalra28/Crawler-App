@@ -84,7 +84,7 @@ def index(request):
         articles = parsed.find_all("article")
         
 
-        if history.objects.filter(tag = ta).exists()==False:
+        if history.objects.get(tag = ta).exists()==False:
             his = history.objects.create(tag=ta)
             his.save()
 
