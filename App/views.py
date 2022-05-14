@@ -51,9 +51,9 @@ def GetContent(URL,url):
     content = list((map(lambda x: x.lower(), content)))
     # print(stop_words)
     # print(content)
-    unique_words=[]
-    unique_words = Counter(unique_words)
-    unique_words = sorted(unique_words.items(), key=lambda item: (-item[1], item[0]))
+    # unique_words=[]
+    # unique_words = Counter(unique_words)
+    # unique_words = sorted(unique_words.items(), key=lambda item: (-item[1], item[0]))
 
     # print(unique_words[0:10])
     # print(creator)
@@ -61,7 +61,7 @@ def GetContent(URL,url):
     # print(published_date)
     # print(reading_time)
 
-    return unique_words,creator,name,published_date,reading_time
+    return creator,name,published_date,reading_time
 
 def index(request):
     print(request)
@@ -76,7 +76,7 @@ def index(request):
         articles = parsed.find_all("article")
         
 
-        if history.objects.get(tag = ta).exists()==False:
+        if history.objects.filter(tag = ta).exists()==False:
             his = history.objects.create(tag=ta)
             his.save()
 
@@ -85,12 +85,12 @@ def index(request):
             print(url)
             
             if url[0]=="/":
-                unique_words,creator,name,published_date,reading_time=GetContent("https://medium.com",url)
-                if len(unique_words)!=0 and creator!=" " and name!=" " and published_date!=" " and reading_time!=" ":
+                creator,name,published_date,reading_time=GetContent("https://medium.com",url)
+                if  creator!=" " and name!=" " and published_date!=" " and reading_time!=" ":
                     print("https://medium.com"+url)
                     if creator.endswith("Follow"):
                             creator=creator[0:len(creator)-6]
-                    print(unique_words[0:10])
+                    # print(unique_words[0:10])
                     print(creator)
                     print(name)
                     print(published_date)
