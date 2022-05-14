@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
 from bs4 import BeautifulSoup
 import requests
-from nltk.corpus import stopwords
 from collections import Counter
 from urllib.parse import urljoin
 from .models import page, history
@@ -50,16 +49,9 @@ def GetContent(URL,url):
 
     content = content.split(" ")
     content = list((map(lambda x: x.lower(), content)))
-    stop_words=stopwords.words("english")
     # print(stop_words)
     # print(content)
     unique_words=[]
-
-    for i in content:
-        if i in stop_words or i=="":
-            pass
-        else:
-            unique_words.append(i)
     unique_words = Counter(unique_words)
     unique_words = sorted(unique_words.items(), key=lambda item: (-item[1], item[0]))
 
