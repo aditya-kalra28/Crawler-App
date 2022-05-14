@@ -10,7 +10,6 @@ gunicorn==20.1.0
 html5lib==1.1
 idna==3.3
 joblib==1.1.0
-nltk==3.7
 regex==2022.4.24
 requests==2.27.1
 six==1.16.0
